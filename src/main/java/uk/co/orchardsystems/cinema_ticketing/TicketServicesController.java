@@ -9,18 +9,18 @@ import javax.xml.ws.Response;
 @RestController
 public class TicketServicesController {
 
-    @GetMapping("/cinemas")
-    public ResponseEntity<String> getCinemas(){}
-
-    @GetMapping("/movies")
-    public ResponseEntity<String> getMoviesAtCinema(@RequestParam("cinemaID") String cinemaID){}
-
-    @GetMapping("/screenings")
-    public ResponseEntity<String> getScreenings(@RequestParam("cinemaID") String cinemaID, @RequestParam("movieID") String movieID){}
-
-    //creates a booking and returns the booking ID
-    @PostMapping("/bookTickets")
-    public ResponseEntity<String> bookTickets(@RequestBody Screening screening){}
+//    @GetMapping("/cinemas")
+//    public ResponseEntity<String> getCinemas(){}
+//
+//    @GetMapping("/movies")
+//    public ResponseEntity<String> getMoviesAtCinema(@RequestParam("cinemaID") String cinemaID){}
+//
+//    @GetMapping("/screenings")
+//    public ResponseEntity<String> getScreenings(@RequestParam("cinemaID") String cinemaID, @RequestParam("movieID") String movieID){}
+//
+//    //creates a booking and returns the booking ID
+//    @PostMapping("/bookTickets")
+//    public ResponseEntity<String> bookTickets(@RequestBody Screening screening){}
 
 
 

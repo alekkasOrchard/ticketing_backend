@@ -1,9 +1,10 @@
 package uk.co.orchardsystems.cinema_ticketing;
 
-import java.util.Map;
+import java.util.List;
 
 public class Screen {
 
-    private int number;
-    private Map<Integer, Boolean> seats;
+    private int id;
+    private List<Screening> screenings;
+
 }
