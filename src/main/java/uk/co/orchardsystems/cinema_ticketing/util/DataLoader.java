@@ -15,7 +15,7 @@ import java.util.Properties;
 public class DataLoader {
     private static Properties prop = loadProperties();
 
-    public static void main(String[] args){
+    public static void main(String[] args) {
         prop = loadProperties();
         String appData = "";
         try {
@@ -24,10 +24,10 @@ public class DataLoader {
             e.printStackTrace();
         }
         writeDataToDB(appData);
+
     }
 
-    private static void writeDataToDB(String appData)
-    {
+    private static void writeDataToDB(String appData) {
         String host = prop.get("mongo.host").toString();
         int port = Integer.parseInt(prop.get("mongo.port").toString());
         String dbName = prop.get("mongo.db").toString();
@@ -45,10 +45,16 @@ public class DataLoader {
 
         //debugging
         DBCursor cursorDoc = collection.find();
-        while (cursorDoc.hasNext()) System.out.println(cursorDoc.next());
+        String test = "";
+        while (cursorDoc.hasNext()) {
+            test = cursorDoc.next().toString();
+        }
+        System.out.println(test);
+
     }
 
-    private static Properties loadProperties(){
+
+    private static Properties loadProperties() {
         InputStream input = null;
         Properties prop = new Properties();
         try {
@@ -70,8 +76,7 @@ public class DataLoader {
         return prop;
     }
 
-    private static String readFile(String path, Charset encoding) throws IOException
-    {
+    private static String readFile(String path, Charset encoding) throws IOException {
         byte[] encoded = Files.readAllBytes(Paths.get(path));
         return new String(encoded, encoding);
     }

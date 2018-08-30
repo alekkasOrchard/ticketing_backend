@@ -7,18 +7,11 @@ import com.mongodb.MongoException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
-@Component
 public class MongoFactory {
     private static Mongo mongo;
 
-    @Value("${mongo.host}")
-    private static String host;
-    @Value("${mongo.port}")
-    private static int port;
-    @Value("${mongo.db}")
-    private static String dbName;
-    @Value("${mongo.db.collection}")
-    private static String collectionName;
+    private final static String HOST = "localhost";
+    private final static int PORT = 27017;
 
     private MongoFactory() {
     }
@@ -26,7 +19,7 @@ public class MongoFactory {
     public static Mongo getMongo() {
         if (mongo == null) {
             try {
-                mongo = new Mongo(host, port);
+                mongo = new Mongo(HOST, PORT);
             } catch (MongoException ex) {
                 ex.printStackTrace();
             }

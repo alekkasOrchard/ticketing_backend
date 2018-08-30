@@ -95,6 +95,208 @@
                 true
               ],
               "movie": {
+                "id": 1,
+                "title": "Blade Runner",
+                "description": "A blade runner must pursue and terminate four replicants who stole a ship in space, and have returned to Earth to find their creator.",
+                "rating": "15"
+              }
+            }
+          ]
+        },
+        {
+          "id": 2,
+          "screening": [
+            {
+              "id": 5,
+              "date": "7/8/2018",
+              "time": "10:00",
+              "availableSeats": [
+                true,
+                true,
+                true,
+                true,
+                true,
+                true,
+                true,
+                true,
+                true,
+                true
+              ],
+              "movie": {
+                "id": 1,
+                "title": "Blade Runner",
+                "description": "A blade runner must pursue and terminate four replicants who stole a ship in space, and have returned to Earth to find their creator.",
+                "rating": "15"
+              }
+            },
+            {
+              "id": 6,
+              "date": "7/8/2018",
+              "time": "14:30",
+              "availableSeats": [
+                true,
+                true,
+                true,
+                true,
+                true,
+                true,
+                true,
+                true,
+                true,
+                true
+              ],
+              "movie": {
+                "id": 2,
+                "title": "Alien",
+                "description": "After a space merchant vessel perceives an unknown transmission as a distress call, its landing on the source moon finds one of the crew attacked by a mysterious lifeform, and they soon realize that its life cycle has merely begun.",
+                "rating": "18"
+              }
+            },
+            {
+              "id": 7,
+              "date": "7/8/2018",
+              "time": "19:15",
+              "availableSeats": [
+                true,
+                true,
+                true,
+                true,
+                true,
+                true,
+                true,
+                true,
+                true,
+                true
+              ],
+              "movie": {
+                "id": 5,
+                "title": "Lawrence of Arabia",
+                "description": "The story of T.E. Lawrence, the English officer who successfully united and led the diverse, often warring, Arab tribes during World War I in order to fight the Turks.",
+                "rating": "12"
+              }
+            },
+            {
+              "id": 8,
+              "date": "7/8/2018",
+              "time": "23:45",
+              "availableSeats": [
+                true,
+                true,
+                true,
+                true,
+                true,
+                true,
+                true,
+                true,
+                true,
+                true
+              ],
+              "movie": {
+                "id": 6,
+                "title": "The Thing",
+                "description": "A research team in Antarctica is hunted by a shape-shifting alien that assumes the appearance of its victims.",
+                "rating": "18"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "name": "cinema2",
+      "address": "address2",
+      "contactNum": "07789147384",
+      "screen": [
+        {
+          "id": 1,
+          "screening": [
+            {
+              "id": 1,
+              "date": "7/8/2018",
+              "time": "9:00",
+              "availableSeats": [
+                true,
+                true,
+                true,
+                true,
+                true,
+                true,
+                true,
+                true,
+                true,
+                true
+              ],
+              "movie": {
+                "id": 1,
+                "title": "Blade Runner",
+                "description": "A blade runner must pursue and terminate four replicants who stole a ship in space, and have returned to Earth to find their creator.",
+                "rating": "15"
+              }
+            },
+            {
+              "id": 2,
+              "date": "7/8/2018",
+              "time": "13:30",
+              "availableSeats": [
+                true,
+                true,
+                true,
+                true,
+                true,
+                true,
+                true,
+                true,
+                true,
+                true
+              ],
+              "movie": {
+                "id": 2,
+                "title": "Alien",
+                "description": "After a space merchant vessel perceives an unknown transmission as a distress call, its landing on the source moon finds one of the crew attacked by a mysterious lifeform, and they soon realize that its life cycle has merely begun.",
+                "rating": "18"
+              }
+            },
+            {
+              "id": 3,
+              "date": "7/8/2018",
+              "time": "18:00",
+              "availableSeats": [
+                true,
+                true,
+                true,
+                true,
+                true,
+                true,
+                true,
+                true,
+                true,
+                true
+              ],
+              "movie": {
+                "id": 3,
+                "title": "The Lord of the Rings: The Fellowship of the Ring",
+                "description": "A meek Hobbit from the Shire and eight companions set out on a journey to destroy the powerful One Ring and save Middle-earth from the Dark Lord Sauron.",
+                "rating": "12"
+              }
+            },
+            {
+              "id": 4,
+              "date": "7/8/2018",
+              "time": "22:45",
+              "availableSeats": [
+                true,
+                true,
+                true,
+                true,
+                true,
+                true,
+                true,
+                true,
+                true,
+                true
+              ],
+              "movie": {
                 "id": 4,
                 "title": "The Big Lebowski",
                 "description": "\"The Dude\" Lebowski, mistaken for a millionaire Lebowski, seeks restitution for his ruined rug and enlists his bowling buddies to help get it.",
@@ -201,7 +403,6 @@
           ]
         }
       ]
-    },
-    {}
+    }
   ]
 }
