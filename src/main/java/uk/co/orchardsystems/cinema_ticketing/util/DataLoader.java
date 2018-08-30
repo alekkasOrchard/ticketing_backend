@@ -1,4 +1,4 @@
-package uk.co.orchardsystems.cinema_ticketing;
+package uk.co.orchardsystems.cinema_ticketing.util;
 
 import com.mongodb.*;
 import com.mongodb.util.JSON;
@@ -15,26 +15,30 @@ import java.util.Properties;
 public class DataLoader {
     private static Properties prop = loadProperties();
 
-
     public static void main(String[] args){
         prop = loadProperties();
-
         String appData = "";
         try {
             appData = readFile(prop.get("dataFileLocation").toString(), StandardCharsets.UTF_8);
         } catch (IOException e) {
             e.printStackTrace();
         }
-
         writeDataToDB(appData);
-
     }
 
     private static void writeDataToDB(String appData)
     {
-        Mongo mongo = new Mongo("localhost", 27017);
-        DB db = mongo.getDB(prop.get("mongo.db").toString());
-        DBCollection collection = db.getCollection("cinemas");
+        String host = prop.get("mongo.host").toString();
+        int port = Integer.parseInt(prop.get("mongo.port").toString());
+        String dbName = prop.get("mongo.db").toString();
+        String collectionName = prop.get("mongo.db.collection").toString();
+        Mongo mongo = new Mongo(host, port);
+        DB db = mongo.getDB(dbName);
+        if (db.collectionExists(collectionName)) {
+            DBCollection myCollection = db.getCollection(collectionName);
+            myCollection.drop();
+        }
+        DBCollection collection = db.getCollection(collectionName);
 
         DBObject dbObject = (DBObject) JSON.parse(appData);
         collection.insert(dbObject);

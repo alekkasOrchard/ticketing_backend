@@ -1,12 +1,13 @@
 package uk.co.orchardsystems.cinema_ticketing;
 
-import java.util.List;
+import lombok.Data;
 
+@Data
 public class Cinema {
-
+    private int id;
     private String name;
     private String address;
     private String contactNum;
-    private List<Screen> screens;
+    private Screen[] screens;
 
 }

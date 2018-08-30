@@ -1,4 +1,4 @@
-package uk.co.orchardsystems.cinema_ticketing;
+package uk.co.orchardsystems.cinema_ticketing.controller;
 
 import com.mongodb.util.JSON;
 import org.springframework.http.ResponseEntity;
