@@ -10,9 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import uk.co.orchardsystems.cinema_ticketing.factory.MongoFactory;
 
-import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Set;
 
 @Service("userService")
 @Transactional
@@ -41,18 +39,37 @@ public class CinemaService {
         JSONArray movies = new JSONArray();
         JSONArray cinemas = extractCinemasFromCollection(getCinemaCollection());
         JSONArray screens = cinemas.getJSONObject(cinemaId - 1).getJSONArray("screen");
-        for (int i=0; i<screens.length(); i++){
+        for (int i = 0; i < screens.length(); i++) {
             JSONArray screenings = screens.getJSONObject(i).getJSONArray("screening");
-            for(int j=0; j<screenings.length(); j++){
+            for (int j = 0; j < screenings.length(); j++) {
                 JSONObject movie = screenings.getJSONObject(j).getJSONObject("movie");
                 Integer movieId = Integer.parseInt(movie.get("id").toString());
-                if(!movieIds.contains(movieId)){
+                if (!movieIds.contains(movieId)) {
                     movies.put(movie);
                     movieIds.add(movieId);
                 }
             }
         }
         return movies.toString();
+    }
+
+    public String getScreeningsForMovie(int cinemaId, int movieId) throws JSONException {
+        JSONArray screeningsForMovie = new JSONArray();
+        JSONArray cinemas = extractCinemasFromCollection(getCinemaCollection());
+        JSONArray screens = cinemas.getJSONObject(cinemaId - 1).getJSONArray("screen");
+        for (int i = 0; i < screens.length(); i++) {
+            JSONArray screenings = screens.getJSONObject(i).getJSONArray("screening");
+            for (int j = 0; j < screenings.length(); j++) {
+                JSONObject screening = screenings.getJSONObject(j);
+                JSONObject movie = screening.getJSONObject("movie");
+                int currentMovieId = Integer.parseInt(movie.get("id").toString());
+                if (currentMovieId == movieId) {
+                    screening.put("screenId", i + 1);
+                    screeningsForMovie.put(screening);
+                }
+            }
+        }
+        return screeningsForMovie.toString();
     }
 
     private JSONArray extractCinemasFromCollection(String collection) throws JSONException {

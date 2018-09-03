@@ -43,10 +43,20 @@ public class TicketServicesController {
         }
         return new ResponseEntity<>(movies, response);
     }
-//
-//    @GetMapping("/screenings")
-//    public ResponseEntity<String> getScreenings(@RequestParam("cinemaId") String cinemaId, @RequestParam("movieId") String movieId){}
-//
+
+    @GetMapping("/screenings")
+    public ResponseEntity<String> getScreenings(@RequestParam("cinemaId") int cinemaId, @RequestParam("movieId") int movieId){
+        String screenings = "";
+        HttpStatus response = HttpStatus.FOUND;
+        try {
+            screenings = cinemaService.getScreeningsForMovie(cinemaId, movieId);
+        } catch (JSONException e) {
+            e.printStackTrace();
+            response = HttpStatus.NOT_FOUND;
+        }
+        return new ResponseEntity<>(screenings, response);
+    }
+
 //    //creates a booking and returns the booking ID
 //    @PostMapping("/bookTickets")
 //    public ResponseEntity<String> bookTickets(@RequestBody Screening screening){}

@@ -1,6 +1,4 @@
 package uk.co.orchardsystems.cinema_ticketing;
 
-public class MongoFactoryTest {
-
-
+public class CinemaServiceTest {
 }
