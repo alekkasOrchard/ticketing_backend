@@ -5,10 +5,10 @@ import com.mongodb.DBCursor;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import uk.co.orchardsystems.cinema_ticketing.factory.MongoFactory;
 
 import java.util.HashSet;
 
@@ -20,6 +20,8 @@ public class CinemaService {
     private String dbName;
     @Value("${mongo.db.collection}")
     private String collectionName;
+    @Autowired
+    private MongoBean mongo;
 
     public String getCinema(int cinemaId) throws JSONException {
         JSONArray cinemas = extractCinemasFromCollection(getCinemaCollection());
@@ -77,10 +79,9 @@ public class CinemaService {
     }
 
     private String getCinemaCollection() {
-        DBCollection coll = MongoFactory.getCollection(dbName, collectionName);
+        DBCollection coll = mongo.getCollection(dbName, collectionName);
         DBCursor cursor = coll.find();
         return cursor.next().toString();
-
     }
 
 }
