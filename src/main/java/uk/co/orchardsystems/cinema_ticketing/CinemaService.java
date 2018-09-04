@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import uk.co.orchardsystems.cinema_ticketing.Exceptions.NoScreeningsFoundException;
 
 import java.util.HashSet;
 
@@ -53,7 +54,7 @@ public class CinemaService {
         return movies.toString();
     }
 
-    public String getScreeningsForMovie(int cinemaId, int movieId) throws JSONException {
+    public String getScreeningsForMovie(int cinemaId, int movieId) throws JSONException, NoScreeningsFoundException {
         JSONArray screeningsForMovie = new JSONArray();
         JSONArray cinemas = mongo.getCinemasJSON(dbName, collectionName);
         JSONArray screens = cinemas.getJSONObject(cinemaId - 1).getJSONArray("screens");
@@ -68,6 +69,9 @@ public class CinemaService {
                     screeningsForMovie.put(screening);
                 }
             }
+        }
+        if(screeningsForMovie.length() == 0){
+            throw new NoScreeningsFoundException("No screenings found for movie with id: " + movieId + " at cinema with id: " + cinemaId);
         }
         return screeningsForMovie.toString();
     }

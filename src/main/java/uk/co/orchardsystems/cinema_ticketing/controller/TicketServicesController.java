@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import uk.co.orchardsystems.cinema_ticketing.CinemaService;
+import uk.co.orchardsystems.cinema_ticketing.Exceptions.NoScreeningsFoundException;
 
 @RestController
 @RequestMapping("/ticketing")
@@ -49,7 +50,7 @@ public class TicketServicesController {
         HttpStatus response = HttpStatus.FOUND;
         try {
             screenings = cinemaService.getScreeningsForMovie(cinemaId, movieId);
-        } catch (JSONException e) {
+        } catch (JSONException | NoScreeningsFoundException e) {
             e.printStackTrace();
             response = HttpStatus.NOT_FOUND;
         }
