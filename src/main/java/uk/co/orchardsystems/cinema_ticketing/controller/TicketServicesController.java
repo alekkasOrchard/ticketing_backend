@@ -1,6 +1,7 @@
 package uk.co.orchardsystems.cinema_ticketing.controller;
 
 import org.json.JSONException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -9,13 +10,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import uk.co.orchardsystems.cinema_ticketing.CinemaService;
 
-import javax.annotation.Resource;
-
 @RestController
 @RequestMapping("/ticketing")
 public class TicketServicesController {
 
-    @Resource(name = "cinemaService")
+    @Autowired
     private CinemaService cinemaService;
 
     @GetMapping("/cinemas")

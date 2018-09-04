@@ -1,9 +1,9 @@
 package uk.co.orchardsystems.cinema_ticketing;
 
-import com.mongodb.DB;
-import com.mongodb.DBCollection;
-import com.mongodb.Mongo;
-import com.mongodb.MongoException;
+import com.mongodb.*;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -27,6 +27,12 @@ public class MongoBean {
 
     public DBCollection getCollection(String dbName, String collectionName) {
         return getDB(dbName).getCollection(collectionName);
+    }
+
+    public JSONArray getCinemasJSON(String dbName, String collectionName) throws JSONException {
+        DBCollection coll = getCollection(dbName, collectionName);
+        DBCursor cursor = coll.find();
+        return new JSONObject(cursor.next().toString()).getJSONArray("cinemas");
     }
 
 }

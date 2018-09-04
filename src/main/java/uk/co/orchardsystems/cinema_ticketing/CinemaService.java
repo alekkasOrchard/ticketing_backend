@@ -1,7 +1,5 @@
 package uk.co.orchardsystems.cinema_ticketing;
 
-import com.mongodb.DBCollection;
-import com.mongodb.DBCursor;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -24,14 +22,14 @@ public class CinemaService {
     private MongoBean mongo;
 
     public String getCinema(int cinemaId) throws JSONException {
-        JSONArray cinemas = extractCinemasFromCollection(getCinemaCollection());
+        JSONArray cinemas = mongo.getCinemasJSON(dbName, collectionName);
         return cinemas.getJSONObject(cinemaId - 1).toString();
     }
 
     public String getCinemasList() throws JSONException {
-        JSONArray cinemas = extractCinemasFromCollection(getCinemaCollection());
+        JSONArray cinemas = mongo.getCinemasJSON(dbName, collectionName);
         for (int i = 0; i < cinemas.length(); i++) {
-            cinemas.getJSONObject(i).remove("screen");
+            cinemas.getJSONObject(i).remove("screens");
         }
         return cinemas.toString();
     }
@@ -39,10 +37,10 @@ public class CinemaService {
     public String getMoviesList(int cinemaId) throws JSONException {
         HashSet<Integer> movieIds = new HashSet<Integer>();
         JSONArray movies = new JSONArray();
-        JSONArray cinemas = extractCinemasFromCollection(getCinemaCollection());
-        JSONArray screens = cinemas.getJSONObject(cinemaId - 1).getJSONArray("screen");
+        JSONArray cinemas = mongo.getCinemasJSON(dbName, collectionName);
+        JSONArray screens = cinemas.getJSONObject(cinemaId - 1).getJSONArray("screens");
         for (int i = 0; i < screens.length(); i++) {
-            JSONArray screenings = screens.getJSONObject(i).getJSONArray("screening");
+            JSONArray screenings = screens.getJSONObject(i).getJSONArray("screenings");
             for (int j = 0; j < screenings.length(); j++) {
                 JSONObject movie = screenings.getJSONObject(j).getJSONObject("movie");
                 Integer movieId = Integer.parseInt(movie.get("id").toString());
@@ -57,10 +55,10 @@ public class CinemaService {
 
     public String getScreeningsForMovie(int cinemaId, int movieId) throws JSONException {
         JSONArray screeningsForMovie = new JSONArray();
-        JSONArray cinemas = extractCinemasFromCollection(getCinemaCollection());
-        JSONArray screens = cinemas.getJSONObject(cinemaId - 1).getJSONArray("screen");
+        JSONArray cinemas = mongo.getCinemasJSON(dbName, collectionName);
+        JSONArray screens = cinemas.getJSONObject(cinemaId - 1).getJSONArray("screens");
         for (int i = 0; i < screens.length(); i++) {
-            JSONArray screenings = screens.getJSONObject(i).getJSONArray("screening");
+            JSONArray screenings = screens.getJSONObject(i).getJSONArray("screenings");
             for (int j = 0; j < screenings.length(); j++) {
                 JSONObject screening = screenings.getJSONObject(j);
                 JSONObject movie = screening.getJSONObject("movie");
@@ -74,14 +72,5 @@ public class CinemaService {
         return screeningsForMovie.toString();
     }
 
-    private JSONArray extractCinemasFromCollection(String collection) throws JSONException {
-        return new JSONObject(collection).getJSONArray("cinema");
-    }
-
-    private String getCinemaCollection() {
-        DBCollection coll = mongo.getCollection(dbName, collectionName);
-        DBCursor cursor = coll.find();
-        return cursor.next().toString();
-    }
 
 }
