@@ -10,7 +10,7 @@ import uk.co.orchardsystems.cinema_ticketing.Exceptions.NoScreeningsFoundExcepti
 
 @RestController
 @RequestMapping("/ticketing")
-@CrossOrigin(origins = {"localhost:8080"})
+@CrossOrigin(origins = {"${frontend.url}"})
 public class TicketServicesController {
 
     @Autowired
@@ -19,7 +19,7 @@ public class TicketServicesController {
     @GetMapping("/cinemas")
     public ResponseEntity<String> getCinemas(){
         String cinemas = "";
-        HttpStatus response = HttpStatus.FOUND;
+        HttpStatus response = HttpStatus.OK;
         try {
             cinemas = cinemaService.getCinemasList();
         } catch (JSONException e) {
@@ -32,7 +32,7 @@ public class TicketServicesController {
     @GetMapping("/movies")
     public ResponseEntity<String> getMoviesAtCinema(@RequestParam("cinemaId") int cinemaId){
         String movies = "";
-        HttpStatus response = HttpStatus.FOUND;
+        HttpStatus response = HttpStatus.OK;
         try {
             movies = cinemaService.getMoviesList(cinemaId);
         } catch (JSONException e) {
@@ -45,7 +45,7 @@ public class TicketServicesController {
     @GetMapping("/screenings")
     public ResponseEntity<String> getScreenings(@RequestParam("cinemaId") int cinemaId, @RequestParam("movieId") int movieId){
         String screenings = "";
-        HttpStatus response = HttpStatus.FOUND;
+        HttpStatus response = HttpStatus.OK;
         try {
             screenings = cinemaService.getScreeningsForMovie(cinemaId, movieId);
         } catch (JSONException | NoScreeningsFoundException e) {
@@ -62,7 +62,7 @@ public class TicketServicesController {
     @GetMapping("/cinema")
     public ResponseEntity<String> getCinema(@RequestParam("id") int cinemaId) {
         String cinema = "";
-        HttpStatus response = HttpStatus.FOUND;
+        HttpStatus response = HttpStatus.OK;
         try {
             cinema = cinemaService.getCinema((cinemaId));
         } catch (JSONException e) {
