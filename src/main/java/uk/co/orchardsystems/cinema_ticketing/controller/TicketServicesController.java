@@ -60,7 +60,7 @@ public class TicketServicesController {
 //    public ResponseEntity<String> bookTickets(@RequestBody Screening screening){}
 
     @GetMapping("/cinema")
-    public ResponseEntity<String> getCinema(@RequestParam("id") int cinemaId) {
+    public ResponseEntity<String> getCinema(@RequestParam("cinemaId") int cinemaId) {
         String cinema = "";
         HttpStatus response = HttpStatus.OK;
         try {

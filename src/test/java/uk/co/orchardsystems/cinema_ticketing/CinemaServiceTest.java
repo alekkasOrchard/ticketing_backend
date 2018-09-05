@@ -49,7 +49,7 @@ public class CinemaServiceTest {
     }
 
     @Test
-    public void whenWrongCinemaIdIsProvidedForGetCinema_thenCorrectExceptionIsThrown() {
+    public void whenInvalidCinemaIdIsProvidedForGetCinema_thenCorrectExceptionIsThrown() {
         assertThrows(JSONException.class, () -> {
             cinemaService.getCinema(-1);
         });
@@ -70,7 +70,7 @@ public class CinemaServiceTest {
     }
 
     @Test
-    public void whenWrongCinemaIdIsProvidedForGetMoviesList_thenCorrectExceptionIsThrown() {
+    public void whenInvalidCinemaIdIsProvidedForGetMoviesList_thenCorrectExceptionIsThrown() {
         assertThrows(JSONException.class, () -> {
             cinemaService.getMoviesList(-1);
         });
@@ -89,14 +89,14 @@ public class CinemaServiceTest {
     }
 
     @Test
-    public void whenWrongCinemaIdISProvidedForGetScreeningsForMovie_thenCorrectExceptionIsThrown(){
+    public void whenInvalidCinemaIdISProvidedForGetScreeningsForMovie_thenCorrectExceptionIsThrown(){
                 assertThrows(JSONException.class, () -> {
             cinemaService.getScreeningsForMovie(-1, 1);
         });
     }
 
         @Test
-    public void whenWrongMovieIdISProvidedForGetScreeningsForMovie_thenCorrectExceptionIsThrown(){
+    public void whenInvalidMovieIdISProvidedForGetScreeningsForMovie_thenCorrectExceptionIsThrown(){
                 assertThrows(NoScreeningsFoundException.class, () -> {
             cinemaService.getScreeningsForMovie(1, -1);
         });
