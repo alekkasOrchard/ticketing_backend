@@ -77,12 +77,15 @@ public class TicketServicesController {
     @PostMapping("/createBooking")
     public ResponseEntity<String> createBooking(@RequestBody String screening){
         String bookingRef = bookingService.createBooking(screening);
+        String jsonOutput = "{\"bookingRef\":" +"\"" + bookingRef + "\"}";
+
         try {
             bookingService.updateScreening(screening, false);
         } catch (JSONException | ScreeningNotFoundException e) {
             e.printStackTrace();
+            return new ResponseEntity<>("", HttpStatus.INTERNAL_SERVER_ERROR);
         }
-        return new ResponseEntity<>(bookingRef, HttpStatus.OK);
+        return new ResponseEntity<>(jsonOutput, HttpStatus.OK);
     }
 
 //    @GetMapping("/getBooking")
