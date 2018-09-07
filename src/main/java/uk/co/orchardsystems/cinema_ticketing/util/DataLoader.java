@@ -31,26 +31,21 @@ public class DataLoader {
         String host = prop.get("mongo.host").toString();
         int port = Integer.parseInt(prop.get("mongo.port").toString());
         String dbName = prop.get("mongo.db").toString();
-        String collectionName = prop.get("mongo.db.collection").toString();
+        String cinemasCollection = prop.get("mongo.db.cinemas.collection").toString();
+        String bookingsCollection = prop.get("mongo.db.bookings.collection").toString();
         Mongo mongo = new Mongo(host, port);
         DB db = mongo.getDB(dbName);
-        if (db.collectionExists(collectionName)) {
-            DBCollection myCollection = db.getCollection(collectionName);
+        if (db.collectionExists(cinemasCollection)) {
+            DBCollection myCollection = db.getCollection(bookingsCollection);
+            myCollection.drop();
+            myCollection = db.getCollection(cinemasCollection);
             myCollection.drop();
         }
-        DBCollection collection = db.getCollection(collectionName);
-
+        DBCollection collection = db.getCollection(cinemasCollection);
         DBObject dbObject = (DBObject) JSON.parse(appData);
         collection.insert(dbObject);
-
-        //debugging
-        DBCursor cursorDoc = collection.find();
-        String test = "";
-        while (cursorDoc.hasNext()) {
-            test = cursorDoc.next().toString();
-        }
-        System.out.println(test);
-
+        collection = db.getCollection(bookingsCollection);
+        collection.insert((DBObject) JSON.parse("{\"_id\": 1,\"bookings\": [] }"));
     }
 
 
@@ -59,9 +54,7 @@ public class DataLoader {
         Properties prop = new Properties();
         try {
             input = new FileInputStream("src/main/resources/application.properties");
-            // load a properties file
             prop.load(input);
-
         } catch (IOException ex) {
             ex.printStackTrace();
         } finally {

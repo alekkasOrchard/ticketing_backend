@@ -7,28 +7,28 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import uk.co.orchardsystems.cinema_ticketing.Exceptions.NoScreeningsFoundException;
+import uk.co.orchardsystems.cinema_ticketing.Exceptions.ScreeningsNotFoundException;
 
 import java.util.HashSet;
 
-@Service("userService")
+@Service("cinemaService")
 @Transactional
 public class CinemaService {
 
     @Value("${mongo.db}")
     private String dbName;
-    @Value("${mongo.db.collection}")
+    @Value("${mongo.db.cinemas.collection}")
     private String collectionName;
     @Autowired
     private MongoBean mongo;
 
     public String getCinema(int cinemaId) throws JSONException {
-        JSONArray cinemas = mongo.getCinemasJSON(dbName, collectionName);
+        JSONArray cinemas = mongo.getCollectionJSON(dbName, collectionName, "cinemas");
         return cinemas.getJSONObject(cinemaId - 1).toString();
     }
 
     public String getCinemasList() throws JSONException {
-        JSONArray cinemas = mongo.getCinemasJSON(dbName, collectionName);
+        JSONArray cinemas = mongo.getCollectionJSON(dbName, collectionName, "cinemas");
         for (int i = 0; i < cinemas.length(); i++) {
             cinemas.getJSONObject(i).remove("screens");
         }
@@ -38,7 +38,7 @@ public class CinemaService {
     public String getMoviesList(int cinemaId) throws JSONException {
         HashSet<Integer> movieIds = new HashSet<Integer>();
         JSONArray movies = new JSONArray();
-        JSONArray cinemas = mongo.getCinemasJSON(dbName, collectionName);
+        JSONArray cinemas = mongo.getCollectionJSON(dbName, collectionName, "cinemas");
         JSONArray screens = cinemas.getJSONObject(cinemaId - 1).getJSONArray("screens");
         for (int i = 0; i < screens.length(); i++) {
             JSONArray screenings = screens.getJSONObject(i).getJSONArray("screenings");
@@ -54,9 +54,9 @@ public class CinemaService {
         return movies.toString();
     }
 
-    public String getScreeningsForMovie(int cinemaId, int movieId) throws JSONException, NoScreeningsFoundException {
+    public String getScreeningsForMovie(int cinemaId, int movieId) throws JSONException, ScreeningsNotFoundException {
         JSONArray screeningsForMovie = new JSONArray();
-        JSONArray cinemas = mongo.getCinemasJSON(dbName, collectionName);
+        JSONArray cinemas = mongo.getCollectionJSON(dbName, collectionName, "cinemas");
         JSONArray screens = cinemas.getJSONObject(cinemaId - 1).getJSONArray("screens");
         for (int i = 0; i < screens.length(); i++) {
             JSONArray screenings = screens.getJSONObject(i).getJSONArray("screenings");
@@ -71,7 +71,7 @@ public class CinemaService {
             }
         }
         if(screeningsForMovie.length() == 0){
-            throw new NoScreeningsFoundException("No screenings found for movie with id: " + movieId + " at cinema with id: " + cinemaId);
+            throw new ScreeningsNotFoundException("No screenings found for movie with id: " + movieId + " at cinema with id: " + cinemaId);
         }
         return screeningsForMovie.toString();
     }

@@ -29,10 +29,10 @@ public class MongoBean {
         return getDB(dbName).getCollection(collectionName);
     }
 
-    public JSONArray getCinemasJSON(String dbName, String collectionName) throws JSONException {
+    public JSONArray getCollectionJSON(String dbName, String collectionName, String splitBy) throws JSONException {
         DBCollection coll = getCollection(dbName, collectionName);
         DBCursor cursor = coll.find();
-        return new JSONObject(cursor.next().toString()).getJSONArray("cinemas");
+        return new JSONObject(cursor.next().toString()).getJSONArray(splitBy);
     }
 
 }

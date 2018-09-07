@@ -16,7 +16,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.RequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import uk.co.orchardsystems.cinema_ticketing.Exceptions.NoScreeningsFoundException;
+import uk.co.orchardsystems.cinema_ticketing.Exceptions.ScreeningsNotFoundException;
 import uk.co.orchardsystems.cinema_ticketing.controller.TicketServicesController;
 
 import static org.junit.Assert.assertEquals;
@@ -32,7 +32,7 @@ public class TicketServicesControllerTest {
     private CinemaService cinemaService;
 
     @Before
-    public void beforeClassSetup() throws JSONException, NoScreeningsFoundException {
+    public void beforeClassSetup() throws JSONException, ScreeningsNotFoundException {
         Mockito.when(cinemaService.getCinema(1)).thenReturn("result");
         Mockito.when(cinemaService.getCinemasList()).thenReturn("result");
         Mockito.when(cinemaService.getMoviesList(1)).thenReturn("result");
@@ -41,7 +41,7 @@ public class TicketServicesControllerTest {
         Mockito.when(cinemaService.getCinema(-1)).thenThrow(JSONException.class);
         Mockito.when(cinemaService.getMoviesList(-1)).thenThrow(JSONException.class);
         Mockito.when(cinemaService.getScreeningsForMovie(-1, 1)).thenThrow(JSONException.class);
-        Mockito.when(cinemaService.getScreeningsForMovie(1, -1)).thenThrow(NoScreeningsFoundException.class);
+        Mockito.when(cinemaService.getScreeningsForMovie(1, -1)).thenThrow(ScreeningsNotFoundException.class);
     }
 
     @Test

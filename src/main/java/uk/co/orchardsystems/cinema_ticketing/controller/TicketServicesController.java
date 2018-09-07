@@ -5,8 +5,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import uk.co.orchardsystems.cinema_ticketing.BookingService;
 import uk.co.orchardsystems.cinema_ticketing.CinemaService;
-import uk.co.orchardsystems.cinema_ticketing.Exceptions.NoScreeningsFoundException;
+import uk.co.orchardsystems.cinema_ticketing.Exceptions.ScreeningNotFoundException;
+import uk.co.orchardsystems.cinema_ticketing.Exceptions.ScreeningsNotFoundException;
 
 @RestController
 @RequestMapping("/ticketing")
@@ -15,6 +17,8 @@ public class TicketServicesController {
 
     @Autowired
     private CinemaService cinemaService;
+    @Autowired
+    private BookingService bookingService;
 
     @GetMapping("/cinemas")
     public ResponseEntity<String> getCinemas(){
@@ -48,16 +52,12 @@ public class TicketServicesController {
         HttpStatus response = HttpStatus.OK;
         try {
             screenings = cinemaService.getScreeningsForMovie(cinemaId, movieId);
-        } catch (JSONException | NoScreeningsFoundException e) {
+        } catch (JSONException | ScreeningsNotFoundException e) {
             e.printStackTrace();
             response = HttpStatus.NOT_FOUND;
         }
         return new ResponseEntity<>(screenings, response);
     }
-
-//    //creates a booking and returns the booking ID
-//    @PostMapping("/bookTickets")
-//    public ResponseEntity<String> bookTickets(@RequestBody Screening screening){}
 
     @GetMapping("/cinema")
     public ResponseEntity<String> getCinema(@RequestParam("cinemaId") int cinemaId) {
@@ -72,5 +72,20 @@ public class TicketServicesController {
         return new ResponseEntity<>(cinema, response);
     }
 
+
+    //creates a booking and returns the booking ID
+    @PostMapping("/createBooking")
+    public ResponseEntity<String> createBooking(@RequestBody String screening){
+        String bookingRef = bookingService.createBooking(screening);
+        try {
+            bookingService.updateScreening(screening, false);
+        } catch (JSONException | ScreeningNotFoundException e) {
+            e.printStackTrace();
+        }
+        return new ResponseEntity<>(bookingRef, HttpStatus.OK);
+    }
+
+//    @GetMapping("/getBooking")
+//    public ResponseEntity<String> getBooking(@RequestParam("")){}
 
 }

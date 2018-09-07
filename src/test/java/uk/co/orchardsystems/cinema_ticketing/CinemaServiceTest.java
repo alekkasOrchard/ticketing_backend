@@ -13,7 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit4.SpringRunner;
-import uk.co.orchardsystems.cinema_ticketing.Exceptions.NoScreeningsFoundException;
+import uk.co.orchardsystems.cinema_ticketing.Exceptions.ScreeningsNotFoundException;
 
 import java.io.IOException;
 import java.nio.charset.Charset;
@@ -37,7 +37,7 @@ public class CinemaServiceTest {
     @Before
     public void beforeClassSetup() throws IOException, JSONException {
         testData = new JSONObject(readFile("src/test/resources/testData/cinemas.json", StandardCharsets.UTF_8)).getJSONArray("cinemas");
-        Mockito.when(mongoBean.getCinemasJSON("ticketing", "cinemas")).thenReturn(testData);
+        Mockito.when(mongoBean.getCollectionJSON("ticketing", "cinemas", "cinemas")).thenReturn(testData);
     }
 
     @Test
@@ -77,7 +77,7 @@ public class CinemaServiceTest {
     }
 
     @Test
-    public void whenCinemaIdAndMovieIdIsProvided_thenReturnedScreeningsAreCorrect() throws JSONException, NoScreeningsFoundException {
+    public void whenCinemaIdAndMovieIdIsProvided_thenReturnedScreeningsAreCorrect() throws JSONException, ScreeningsNotFoundException {
         String expected = "[ { 'id': 1, 'date': '7/8/2018', 'screenId': 1, 'time': '9:00' }, { 'id': 4, 'date': '7/8/2018', 'screenId': 1, 'time': '22:45' }, { 'id': 5, 'date': '7/8/2018', 'screenId': 2, 'time': '10:00' } ]";
         JSONAssert.assertEquals(expected, cinemaService.getScreeningsForMovie(1, 1), JSONCompareMode.LENIENT);
         expected = "[ { 'id': 7, 'date': '7/8/2018', 'screenId': 2, 'time': '19:15' } ]";
@@ -97,7 +97,7 @@ public class CinemaServiceTest {
 
         @Test
     public void whenInvalidMovieIdISProvidedForGetScreeningsForMovie_thenCorrectExceptionIsThrown(){
-                assertThrows(NoScreeningsFoundException.class, () -> {
+                assertThrows(ScreeningsNotFoundException.class, () -> {
             cinemaService.getScreeningsForMovie(1, -1);
         });
     }

@@ -12,5 +12,8 @@ public class CinemaTicketingConfiguration {
     public CinemaService cinemaService(){return new CinemaService();}
 
     @Bean
+    public BookingService bookingService(){return  new BookingService();}
+
+    @Bean
     public MongoBean mongoBean(){return new MongoBean();}
 }
