@@ -1,0 +1,30 @@
+{
+  "bookings": [
+    {
+      "name": "Alex",
+      "surname": "Lekkas",
+      "contactNum": "07789147384",
+      "email": "alex.lekkas@orchard-systems.co.uk",
+      "cardNum": "0000000000",
+      "bookingRef": "FFF",
+      "cinemaId": 1,
+      "screenId": 1,
+      "screeningId": 1,
+      "seatNumbers": [1, 3, 4
+      ]
+    },
+    {
+      "name": "Alex",
+      "surname": "Lekkas",
+      "contactNum": "07789147384",
+      "email": "alex.lekkas@orchard-systems.co.uk",
+      "cardNum": "0000000000",
+      "bookingRef": "AAA",
+      "cinemaId": 1,
+      "screenId": 2,
+      "screeningId": 5,
+      "seatNumbers": [3, 5, 6
+      ]
+    }
+  ]
+}
